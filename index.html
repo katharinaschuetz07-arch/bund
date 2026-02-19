@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vom Bund zum Reich Premium v1.1.7</title>
+
+<style>
+:root{
+  --black:#121212;
+  --card-bg:#1e1e1e;
+  --white:#ffffff;
+  --red:#ff0000;
+  --gold:#FFD700;
+  --orange:#FFA500; 
+  --dark-gray:#222;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+body{
+  background:var(--black);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  color:var(--white);
+}
+
+.app-container{
+  width:95vw; max-width:390px;
+  height:95vh; max-height:750px;
+  background:var(--black);
+  border:4px solid var(--gold);
+  border-radius:45px;
+  padding:0;
+  display:flex;
+  flex-direction:column;
+  overflow: hidden;
+  box-shadow: 0 0 30px rgba(255, 165, 0, 0.2);
+}
+
+header{
+  background: var(--orange);
+  color: #000;
+  padding: 20px 10px;
+  text-align:center;
+  border-bottom: 2px solid #000;
+}
+
+.version-tag{
+  font-size:0.7rem;
+  font-weight: 750;
+  text-transform: uppercase;
+  letter-spacing:1px;
+}
+
+h1{
+  font-size:1.6rem;
+  font-weight: 780;
+}
+
+h3{
+  font-size:1rem;
+  font-weight:500;
+}
+
+.content-body {
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.menu-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:5px;
+  margin-bottom:12px;
+}
+
+.menu-grid button{
+  background: var(--black);
+  color: var(--white);
+  border: 2px solid var(--red);
+  border-radius:12px;
+  padding:8px 5px;
+  font-size:0.72rem;
+  font-weight: bold;
+  cursor:pointer;
+  transition: 0.2s;
+}
+
+.menu-grid button:active {
+  background: var(--dark-gray);
+  transform: scale(0.95);
+}
+
+.flashcard{
+  height:260px;
+  background: var(--card-bg);
+  color: var(--white);
+  border: 2px solid var(--red);
+  border-radius:25px;
+  padding:18px;
+  overflow-y:auto;
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  margin-bottom:12px;
+  position: relative;
+  cursor: pointer;
+}
+
+.flashcard h2{
+  font-size: 1.2rem;
+  margin-bottom:6px;
+  color: var(--gold);
+  font-weight: 610;
+}
+
+.flashcard p {
+  font-size: 0.92rem;
+  line-height: 1.4;
+  color: var(--white);
+  opacity: 0.95;
+}
+
+.counter-box{
+  position:absolute;
+  bottom:8px;
+  right:12px;
+  font-size:0.62rem;
+  opacity:0.7;
+  color: var(--white);
+}
+
+.cat-display{
+  position:absolute;
+  top:8px;
+  left:12px;
+  font-size:0.62rem;
+  opacity:0.7;
+  color: var(--white);
+}
+
+.controls{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:8px;
+  margin-bottom:4px;
+}
+
+.controls button{
+  background: var(--black);
+  color:var(--white);
+  border: 2px solid var(--red);
+  border-radius:16px;
+  padding:7px;
+  cursor:pointer;
+  font-weight:bold;
+  font-size: 0.72rem;
+}
+
+.controls button.active {
+  background: var(--red);
+  color: #fff;
+}
+
+.bottom-nav{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:4px;
+  margin-top:4px;
+  padding-bottom:0px;
+}
+
+.bottom-nav button{
+  background: var(--black);
+  color:#fff;
+  border: 2px solid var(--red);
+  border-radius:18px;
+  padding:10px;
+  cursor:pointer;
+  font-weight:bold;
+  font-size: 0.78rem;
+}
+
+footer{
+  text-align:center;
+  font-size:0.62rem;
+  opacity:0.5;
+  padding:2px;
+  background: #080808;
+  border-top: 1px solid #222;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app-container">
+
+<header>
+<div class="version-tag">Premium Edition | Version 1.1.7</div>
+<h1 id="main-header">Vom Bund zum Reich</h1>
+<h3>Kaiserreich 1871</h3>
+</header>
+
+<div class="content-body">
+
+<div class="menu-grid">
+<button onclick="setCat('Königreich')">Königreich</button>
+<button onclick="setCat('Großherzogtum')">Großherzogtum</button>
+<button onclick="setCat('Herzogtum')">Herzogtum</button>
+<button onclick="setCat('Fürstentum')">Fürstentum</button>
+<button onclick="setCat('FreieStädte')">Freie Städte</button>
+<button onclick="setCat('Reichsland')">Reichsland</button>
+<button onclick="setCat('Uebersicht1')">1815–1866</button>
+<button onclick="setCat('Uebersicht2')">1866–1871</button>
+<button onclick="setCat('Weimar')">Weimarer Republik</button>
+</div>
+
+<div class="flashcard" onclick="next()">
+<div class="cat-display" id="cat-display">Kategorie</div>
+<h2 id="title">Willkommen</h2>
+<p id="text">Wähle eine Kategorie aus, um zu starten.</p>
+<div class="counter-box" id="counter">0 / 0</div>
+</div>
+
+<div class="controls">
+<button onclick="prev()">zurück</button>
+<button class="active" onclick="speak()">Audio</button>
+<button onclick="next()">weiter</button>
+</div>
+
+<div class="bottom-nav">
+<button onclick="setCat('Start')">Start</button>
+<button onclick="setCat('Geschichte')">Geschichte</button>
+<button onclick="setCat('Personen')">Personen</button>
+</div>
+
+</div>
+
+<footer>(c) 2026 Premium Edition - Deutsches Kaiserreich | v.1.1.7 </footer>
+
+</div>
+
+<script>
+const data={
+Start:[
+
+{title:"Willkommen", text:"Hier lernst du die Entwicklung vom Deutschen Bund zum Deutschen Kaiserreich sowie philosophische Hintergründe."}
+],
+Personen:[
+
+  {
+    title: "Friedrich Wilhelm III. (Preußen)", 
+    text: "Regierte 1797–1840. Gründungsmitglied des Deutschen Bundes (1815). Er prägte die preußische Restauration nach den Befreiungskriegen."
+  },
+  {
+    title: "Klemens von Metternich", 
+    text: "Österreichischer Staatsmann. Architekt des Wiener Kongresses (1815) und Hauptvertreter der Restauration sowie der Unterdrückung liberaler Bewegungen."
+  },
+  {
+    title: "Otto von Bismarck", 
+    text: "Der 'Eiserne Kanzler'. Er einte das Reich durch 'Eisen und Blut' (1871) und schuf das Sozialversicherungssystem, um die Arbeiterbewegung zu schwächen."
+  },
+  {
+    title: "Kaiser Wilhelm I.", 
+    text: "Erster Deutscher Kaiser (ab 1871). Er überließ die Politik weitgehend Bismarck, war aber Symbolfigur der nationalen Einigung."
+  },
+  {
+    title: "Kaiser Wilhelm II.", 
+    text: "Letzter Kaiser. Entließ Bismarck 1890. Seine forcierte Weltmachtpolitik und Flottenaufrüstung führten in die Isolation und den Ersten Weltkrieg."
+  },
+  {
+    title: "Friedrich Ebert (SPD)", 
+    text: "Erster Reichspräsident der Weimarer Republik. Er schlug die Brücke vom Kaiserreich zur Demokratie während der Novemberrevolution 1918."
+  },
+  {
+    title: "Philipp Scheidemann (SPD)", 
+    text: "Rief am 9. November 1918 vom Balkon des Reichstags die Republik aus und beendete damit faktisch die Monarchie in Deutschland."
+  },
+  {
+    title: "Paul von Hindenburg", 
+    text: "Generalfeldmarschall im 1. Weltkrieg und später Reichspräsident. Er ernannte 1933 Hitler zum Kanzler, was das Ende der Republik besiegelte."
+  },
+  {
+    title: "Rosa Luxemburg", 
+    text: "Wichtige Nebenfigur der Linken. Mitbegründerin des Spartakusbundes. Sie kämpfte für eine Räterepublik und gegen den Parlamentarismus."
+  },
+  {
+    title: "Matthias Erzberger", 
+    text: "Zentrumspolitiker. Er unterzeichnete 1818 den Waffenstillstand von Compiègne und wurde deshalb zum Ziel rechter 'Dolchstoß'-Propaganda."
+  }
+],
+
+
+Begriffe:[
+{title:"Deutscher Bund", text:"1815–1866, loser Zusammenschluss von 39 Staaten nach dem Wiener Kongress."},
+{title:"Norddeutscher Bund", text:"1867–1871, unter preußischer Führung, Grundlage für das Kaiserreich."},
+{title:"Deutsches Kaiserreich", text:"1871–1918, zentral unter Kaiser Wilhelm I., Kanzler Bismarck."},
+{title:"Weimarer Republik", text:"1918–1933, parlamentarische Demokratie nach Ende des Kaiserreichs."}
+],
+
+Königreich:[
+
+  {
+    title: "Königreich Preußen",
+    text: "Größte Macht neben Österreich. Erhielt 1815 Rheinland & Westfalen. Führte 1834 den Zollverein an. Ziel: Vorherrschaft in Norddeutschland.\n\n1815 | König: Friedrich Wilhelm III."
+  },
+  {
+    title: "Königreich Bayern",
+    text: "Drittgrößter Staat im Bund. Wurde 1818 konstitutionelle Monarchie. Erhielt 1815 die Pfalz zurück. Agierte oft als 'Dritte Kraft'.\n\n1815 | König: Maximilian I. Joseph"
+  },
+  {
+    title: "Königreich Sachsen",
+    text: "Verlor 1815 fast die Hälfte seines Gebiets an Preußen. Wichtiges Zentrum für Industrie und Bergbau. Seit 1831 moderne Verfassung.\n\n1815 | König: Friedrich August I."
+  },
+  {
+    title: "Königreich Hannover",
+    text: "Bis 1837 in Personalunion mit Großbritannien. Viertgrößter Staat im Bund. Wurde 1866 schließlich von Preußen annektiert.\n\n1815 | König: Georg III. (UK)"
+  },
+  {
+    title: "Königreich Württemberg",
+    text: "Seit 1819 moderne Verfassung. Stark landwirtschaftlich geprägt. Gründungsmitglied des Deutschen Zollvereins.\n\n1815 | König: Friedrich I."
+  }
+
+],
+
+Großherzogtum:[
+
+  {
+    title: "Großherzogtum Baden",
+    text: "Galt als liberalster Staat im Bund. Erhielt 1818 eine wegweisende Verfassung. Wichtiger Schauplatz der Revolution von 1848/49.\n\n1815 | Großherzog: Karl Friedrich"
+  },
+  {
+    title: "Großherzogtum Hessen",
+    text: "Auch Hessen-Darmstadt genannt. Bestand aus zwei durch preußisches Gebiet getrennten Provinzen. Mitglied im Deutschen Zollverein.\n\n1815 | Großherzog: Ludwig I."
+  },
+  {
+    title: "Mecklenburg-Schwerin",
+    text: "Ein stark agrarisch geprägter Staat im Norden. Blieb bis spät in feudalen Strukturen verhaftet, ohne moderne Verfassung.\n\n1815 | Großherzog: Friedrich Franz I."
+  },
+  {
+    title: "Großherzogtum Weimar",
+    text: "Sachsen-Weimar-Eisenach. Zentrum der deutschen Klassik und Kultur. Erste Verfassung eines deutschen Staates bereits 1816.\n\n1815 | Großherzog: Carl August"
+  },
+  {
+    title: "Großherzogtum Oldenburg",
+    text: "Im Nordwesten gelegen, eng mit Russland und Dänemark verbunden. Blieb im Deutschen Krieg 1866 neutral und trat dem Norddeutschen Bund bei.\n\n1815 | Großherzog: Peter Friedrich Ludwig"
+  }
+
+],
+
+FreieStädte:[
+
+  {
+    title: "Freie Stadt Frankfurt",
+    text: "Sitz des Bundestages und somit politisches Zentrum des Deutschen Bundes. Bedeutender Finanzplatz und Ort der Kaiserkrönungen.\n\n1815 | Status: Freie Stadt & Parlamentssitz"
+  },
+  {
+    title: "Freie Hansestadt Hamburg",
+    text: "Wichtigster deutscher Seehafen und Zentrum für den Welthandel. Bewahrte stolz ihre republikanische Verfassung und Eigenständigkeit.\n\n1815 | Status: Freie Stadt & Stadtstaat"
+  },
+  {
+    title: "Freie Hansestadt Bremen",
+    text: "Bedeutender Handelsplatz an der Weser. Gründete 1827 Bremerhaven als Außenhafen, um den Überseehandel langfristig zu sichern.\n\n1815 | Status: Freie Stadt & Stadtstaat"
+  },
+  {
+    title: "Freie Hansestadt Lübeck",
+    text: "Einstiges Haupt der Hanse. Im 19. Jahrhundert ein wichtiges Tor zum Ostseeraum, wenn auch wirtschaftlich von Hamburg überholt.\n\n1815 | Status: Freie Stadt & Stadtstaat"
+  }
+
+
+],
+
+Herzogtum:[
+
+  {
+    title: "Herzogtum Nassau",
+    text: "Sitz in Wiesbaden. War ein fortschrittlicher Staat mit früher Verfassung. Wurde 1866 nach dem Krieg von Preußen annektiert.\n\n1815 | Herzog: Wilhelm I."
+  },
+  {
+    title: "Herzogtum Braunschweig",
+    text: "Entstanden aus den Wolfenbütteler Landen. Wichtiger Industriestandort im Norden. Enge dynastische Verbindungen zum Haus Hannover.\n\n1815 | Herzog: Karl II."
+  },
+  {
+    title: "Herzogtum Anhalt",
+    text: "Entstand durch die Vereinigung mehrerer kleiner anhaltischer Linien. Bekannt für das Gartenreich Dessau-Wörlitz.\n\n1815 | Herzog: Leopold IV. Friedrich"
+  },
+  {
+    title: "Herzogtum Sachsen-Coburg und Gotha",
+    text: "Bedeutend durch geschickte Heiratspolitik in ganz Europa. Das Haus stellte später unter anderem den Prinzgemahl von Queen Victoria.\n\n1815 | Herzog: Ernst I."
+  },
+  {
+    title: "Herzogtum Sachsen-Meiningen",
+    text: "Eines der thüringischen Herzogtümer. Später weltberühmt für sein innovatives Hoftheater und die Reform der Schauspielkunst.\n\n1815 | Herzog: Bernhard II."
+  }
+
+],
+
+Fürstentum:[
+
+  {
+    title: "Fürstentum Lippe",
+    text: "Kleiner Staat im Nordwesten mit Sitz in Detmold. Bewahrte seine Eigenständigkeit trotz preußischer Umklammerung bis ins Kaiserreich.\n\n1815 | Fürst: Leopold II."
+  },
+  {
+    title: "Fürstentum Schaumburg-Lippe",
+    text: "Eines der kleinsten Länder im Bund. Berühmt für die Festung Wilhelmstein. Schloss sich 1867 dem Norddeutschen Bund an.\n\n1815 | Fürst: Georg Wilhelm"
+  },
+  {
+    title: "Fürstentum Waldeck",
+    text: "Eng mit Preußen verbunden (Akzessionsvertrag). Die Fürsten von Waldeck-Pyrmont blieben dennoch bis 1918 im Amt.\n\n1815 | Fürst: Georg II."
+  },
+  {
+    title: "Schwarzburg-Rudolstadt",
+    text: "Thüringisches Kleinfürstentum. Bekannt für seine reiche Bergbautradition und die malerische Lage im Thüringer Wald.\n\n1815 | Fürst: Friedrich Günther"
+  },
+  {
+    title: "Fürstentum Reuß",
+    text: "Geteilt in Ältere und Jüngere Linie. Bekannt durch die Tradition, dass alle männlichen Nachkommen den Namen Heinrich trugen.\n\n1815 | Fürst: Heinrich XIII."
+  }
+],
+
+Reichsland:[
+
+  {
+    title: "Elsaß-Lothringen",
+    text: "Nach dem Sieg über Frankreich 1871 gewonnen. Es war kein eigenständiger Bundesstaat, sondern wurde als 'Reichsland' direkt vom Kaiser regiert.\n\n1871 | Status: Unmittelbares Reichsland"
+ 
+ }
+],
+
+Uebersicht1:[
+{title:"1815–1866", text:"Gründung Deutscher Bund, 39 Staaten, Bundtag in Frankfurt."},
+{title:"Auflösung 1866", text:"Preußen besiegt Österreich, Deutscher Bund wird aufgelöst."},
+{title:"Norddeutscher Bund 1867", text:"22 Staaten unter preußischer Führung."}
+],
+
+Uebersicht2:[
+{title:"1866–1871", text:"Süddeutsche Staaten treten später bei: Bayern, Württemberg, Baden, Hessen-Darmstadt."},
+{title:"Kaiserreich 1871", text:"Gründung Deutsches Kaiserreich, Kaiser Wilhelm I., Kanzler Bismarck."},
+{title:"Politische Struktur", text:"Bundesstaatliches System mit Nebenfiguren und verschiedenen Herrschaftsformen."}
+],
+Weimar:[
+{title:"Weimarer Republik", text:"1918–1933, parlamentarische Demokratie nach Ende des Kaiserreichs."},
+{title:"Erster Präsident", text:"Friedrich Ebert"},
+{title:"Verfassung", text:"Weimarer Reichsverfassung, Grundlage der parlamentarischen Demokratie."}
+]
+};
+
+let current="Start";
+let index=0;
+
+function setCat(cat){
+current=cat;
+index=0;
+update();
+speak();
+}
+
+function update(){
+const item=data[current][index];
+document.getElementById("title").innerText=item.title;
+document.getElementById("text").innerText=item.text;
+document.getElementById("counter").innerText=`${index+1} / ${data[current].length}`;
+document.getElementById("cat-display").innerText=current;
+}
+
+function next(){
+index=(index+1)%data[current].length;
+update();
+speak();
+}
+
+function prev(){
+index=(index-1+data[current].length)%data[current].length;
+update();
+speak();
+}
+
+function speak(){
+const item=data[current][index];
+window.speechSynthesis.cancel();
+let msg=new SpeechSynthesisUtterance(item.title + ". " + item.text);
+msg.lang="de-DE";
+msg.rate=0.95;
+
+// Stimmen laden und gezielt Deutsch wählen
+let voices = window.speechSynthesis.getVoices();
+let germanVoice = voices.find(v => v.lang.startsWith("de"));
+
+if(germanVoice){
+    msg.voice = germanVoice;
+}
+
+window.speechSynthesis.speak(msg);
+}
+
+// Wichtig: Stimmen werden oft verzögert geladen
+window.speechSynthesis.onvoiceschanged = () => {
+    // Initialer Aufruf, sobald Stimmen bereit sind
+};
+
+window.onload=()=>{
+update();
+// Kleiner Delay für die Sprachausgabe beim Start
+setTimeout(speak, 500);
+};
+</script>
+
+
+</body>
+</html>
